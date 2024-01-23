@@ -6,17 +6,24 @@ const morgan = require("morgan");
 const nunjucks = require("nunjucks");
 const route = require("./routes");
 const constants = require("./constants");
-
+const cors = require("cors");
 const app = express();
+
 //io
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-require("./io")(new Server(server));
+const io = new Server(server, {
+  transports: ["websocket"],
+});
+require("./io")(io);
 
+//MIDDLEWARE
 // static files
 app.use(express.static(path.join(__dirname, "public")));
-//MIDDLEWARE
+//cors
+app.use(cors());
+
 //body parsing
 app.set(express.json());
 app.set(express.urlencoded({ extended: true }));
