@@ -1,0 +1,38 @@
+{% extends "template.html" %}
+
+
+{% block content %}
+<div class="bg-dark container mt-5">
+	<div class="message-container">
+		<div id="message-content-container"
+			class="h-50 card">
+
+		</div>
+		<div class="message-box-container my-2">
+			<textarea class="form-control"
+				name="message"
+				id="message-box"
+				cols="30"
+				rows="5"></textarea>
+			<button class="btn btn-primary mt-2"
+				id="message-btn">Send</button>
+		</div>
+	</div>
+</div>
+
+<script src="/javascript/socket.io/socket.io.min.js"></script>
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		let messageBox = document.querySelector("#message-box");
+		let messageBtn = document.querySelector("#message-btn");
+		let messageContainer = document.querySelector("#message-content-container");
+
+		messageBtn.addEventListener("click", function () {
+			let message = messageBox.value;
+			if (message !== "") messageContainer.textContent += message + "\n";
+			messageBox.value = "";
+		});
+	});
+</script>
+
+{% endblock %}
